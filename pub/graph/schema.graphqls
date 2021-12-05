@@ -1,0 +1,18 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type SendNotificationResponse {
+  """
+  メッセージを受信したユーザーの数
+  """
+  receivedUsers: Int!
+}
+
+"""
+to: メッセージ送信先のユーザー名
+text: 送信したいメッセージの内容
+"""
+type Mutation {
+  sendNotification(to: String!, text: String!): SendNotificationResponse!
+}

@@ -1,0 +1,41 @@
+version: '3.9'
+services:
+  pub:
+    build:
+      context: pub
+    volumes:
+      - type: bind
+        source: ./pub
+        target: /go/src/app
+      - type: volume
+        source: pub_go_modules
+        target: /go/pkg/mod
+    command: air -c .air.toml
+    ports:
+      - '8080:8080'
+    environment:
+      - PORT=8080
+      - REDIS_URL=redis:6379
+  redis:
+    image: redis:6.2.2-alpine
+    ports:
+      - '6379:6379'
+  sub:
+    build:
+      context: sub
+    volumes:
+      - type: bind
+        source: ./sub
+        target: /go/src/app
+      - type: volume
+        source: sub_go_modules
+        target: /go/pkg/mod
+    command: air -c .air.toml
+    ports:
+      - '8081:8081'
+    environment:
+      - PORT=8081
+      - REDIS_URL=redis:6379
+volumes:
+  sub_go_modules: null
+  pub_go_modules: null

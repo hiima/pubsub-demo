@@ -1,0 +1,22 @@
+"""
+クライアントが受け取る通知の型
+"""
+type Notification {
+  """
+  お知らせ本文
+  """
+  text: String!
+
+  """
+  unixtime 形式のタイムスタンプ
+  """
+  timestamp: Int!
+}
+
+"""
+WebSocket エンドポイント
+引数 `userName` は Redis Pub/Sub のチャンネル名として使う
+"""
+type Subscription {
+  onNotificationReceived(userName: String!): Notification!
+}
